@@ -1,4 +1,4 @@
-from selenium.common import NoSuchElementException, TimeoutException
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -26,21 +26,14 @@ class LoginPage:
         self.driver.find_element(*self.PASSWORD_INPUT).clear()
         self.driver.find_element(*self.PASSWORD_INPUT).send_keys(password)
 
+
     def submit_login(self):
-        self.driver.find_element(*self.YALLA_BTN).click()
+        self.driver.find_element(*self.LOGIN_BTN).click()
+        WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(self.SIGN_OUT_BTN)
+        )
 
-    def login(self, email, password):
-        self.fill_email(email)
-        self.fill_password(password)
-        self.submit_login()
 
-    def login_success_text(self):
-        element = WebDriverWait(self.driver,timeout=5).until(
-            EC.visibility_of_element_located(self.CONFIRNATION_TEXT))
-        return element.text
-
-    def close_window(self):
-        self.driver.find_element(*self.OK_BTN).click()
 
     # def is_logged(self):
     #     try:
@@ -58,11 +51,13 @@ class LoginPage:
         except TimeoutException:
             return False
 
-    def get_alert_text(self):
-        alert = WebDriverWait(self.driver,timeout=5).until(
-            EC.alert_is_present()
-        )
-        return alert.text
+
+
+    # def get_alert_text(self):
+    #     alert = WebDriverWait(self.driver,timeout=5).until(
+    #         EC.alert_is_present()
+    #     )
+    #     return alert.text
 
     def accept_alert(self):
         self.driver.switch_to.alert.accept()
