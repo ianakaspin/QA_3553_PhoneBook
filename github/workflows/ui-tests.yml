@@ -1,0 +1,20 @@
+name: UI Tests
+
+# запустить вручную на сайте github:
+on:
+  workflow_dispatch:
+# job - это список предстоящих работ, runs-on - запуск на виртуальной машине
+jobs:
+  test-chrome:
+    runs-on: ubuntu-latest
+    #дефис вначале - это один шаг. uses - готовые действия и их версия (v4)
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - run: pytest Tests/test_login.py --browser=chrome --headless

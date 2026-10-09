@@ -8,8 +8,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from Pages.base_page import BasePage
 
-
 logger = logging.getLogger(__name__)
+
 class ContactPage(BasePage):
     ADD_NAV_LINK = (By.CSS_SELECTOR,"[href='/add']")
     NAME_INPUT = (By.CSS_SELECTOR,"input[placeholder='Name']")
@@ -82,6 +82,7 @@ class ContactPage(BasePage):
         self.fill_contact_form(contact)
         self.submit_contact()
         time.sleep(3)
+        self.wait_until_url_matches(r"/contacts$")
 
 
 

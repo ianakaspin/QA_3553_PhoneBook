@@ -35,7 +35,7 @@ class ContactsPage(BasePage):
     def contact_card_visible(self,phone):
         # Ждёт появл-я карточки с данным тлф и проверяет, что она
         # видима на странице - используется сразу после сохранения контакта,
-        # чтобы убедитьс, что он реально появился в списке
+        # чтобы убедиться, что он реально появился в списке
         locator = (By.XPATH,f"//h3[text()='{phone}']")
         element = WebDriverWait(self.driver,5).until(
             EC.presence_of_element_located(locator))
